@@ -1,0 +1,347 @@
+ \documentclass[12pt]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}        % Кодировка входного документа;
+                                    % при необходимости, вместо cp1251
+                                    % можно указать cp866 (Alt-кодировка
+                                    % DOS) или koi8-r.
+
+\usepackage[english,russian]{babel} % Включение русификации, русских и
+                                    % английских стилей и переносов
+%%\usepackage{a4}
+%%\usepackage{moreverb}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,amsbsy,amstext,amscd,amsxtra,multicol}
+\usepackage{verbatim}
+\usepackage{tikz} %Рисование автоматов
+\usetikzlibrary{automata,positioning}
+\usepackage{multicol} %Несколько колонок
+\usepackage{graphicx}
+\usepackage[colorlinks,urlcolor=blue]{hyperref}
+\usepackage[stable]{footmisc}
+
+%% \voffset-5mm
+%% \def\baselinestretch{1.44}
+\renewcommand{\theequation}{\arabic{equation}}
+\def\hm#1{#1\nobreak\discretionary{}{\hbox{$#1$}}{}}
+\newtheorem{Lemma}{Лемма}
+\theoremstyle{definiton}
+\newtheorem{Remark}{Замечание}
+%%\newtheorem{Def}{Определение}
+\newtheorem{Claim}{Утверждение}
+\newtheorem{Cor}{Следствие}
+\newtheorem{Theorem}{Теорема}
+\theoremstyle{definition}
+\newtheorem{Example}{Пример}
+\newtheorem*{known}{Теорема}
+\def\proofname{Доказательство}
+\theoremstyle{definition}
+\newtheorem{Def}{Определение}
+
+%% \newenvironment{Example} % имя окружения
+%% {\par\noindent{\bf Пример.}} % команды для \begin
+%% {\hfill$\scriptstyle\qed$} % команды для \end
+
+
+
+
+
+
+%\date{22 июня 2011 г.}
+\let\leq\leqslant
+\let\geq\geqslant
+\def\MT{\mathrm{MT}}
+%Обозначения ``ажуром''
+\def\BB{\mathbb B}
+\def\CC{\mathbb C}
+\def\RR{\mathbb R}
+\def\SS{\mathbb S}
+\def\ZZ{\mathbb Z}
+\def\NN{\mathbb N}
+\def\FF{\mathbb F}
+%греческие буквы
+\let\epsilon\varepsilon
+\let\es\emptyset
+\let\eps\varepsilon
+\let\al\alpha
+\let\sg\sigma
+\let\ga\gamma
+\let\ph\varphi
+\let\om\omega
+\let\ld\lambda
+\let\Ld\Lambda
+\let\vk\varkappa
+\let\Om\Omega
+\def\abstractname{}
+
+\def\R{{\cal R}}
+\def\A{{\cal A}}
+\def\B{{\cal B}}
+\def\C{{\cal C}}
+\def\D{{\cal D}}
+\let\w\omega
+
+%классы сложности
+\def\REG{{\mathsf{REG}}}
+\def\CFL{{\mathsf{CFL}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Problems macros  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{xparse}
+\usepackage{ifthen}
+\usepackage{bm} %%% bf in math mode
+\usepackage{color}
+%\usepackage[usenames,dvipsnames]{xcolor}
+
+\definecolor{Gray555}{HTML}{555555}
+\definecolor{Gray444}{HTML}{444444}
+
+
+\newcounter{problem}
+\newcounter{uproblem}
+\newcounter{subproblem}
+\newcounter{prvar}
+
+
+\def\pr{\medskip\noindent\stepcounter{problem}{\bf \theproblem .  }\setcounter{subproblem}{0} }
+\def\prstar{\medskip\noindent\stepcounter{problem}{\bf $\mathbf{\theproblem}^*$\negthickspace.  }\setcounter{subproblem}{0} }
+\def\prpfrom[#1]{\medskip\noindent\stepcounter{problem}{\bf Задача \theproblem~(№#1 из задания).  }\setcounter{subproblem}{0} }
+\def\prp{\medskip\noindent\stepcounter{problem}{\bf Задача \theproblem .  }\setcounter{subproblem}{0} }
+
+\def\prpvar{\medskip\noindent\stepcounter{problem}\setcounter{prvar}{1}{\bf Задача \theproblem \;({\rm\Rnum{\theprvar}}).  }\setcounter{subproblem}{0} }
+\def\prpv{\medskip\noindent\stepcounter{prvar}{\bf Задача \theproblem \,$\bm\langle$\bracketspace{{\rm\Rnum{\theprvar}}}$\bm\rangle$.  }\setcounter{subproblem}{0} }
+\def\prv{\medskip\noindent\stepcounter{prvar}{\bf \theproblem\,$\bm\langle$\bracketspace{{\rm\Rnum{\theprvar}}}$\bm\rangle$}. \setcounter{subproblem}{0} }
+
+\def\prpstar{\medskip\noindent\stepcounter{problem}{\bf Задача $\bf\theproblem^*$\negthickspace.  }\setcounter{subproblem}{0} }
+\def\prdag{\medskip\noindent\stepcounter{problem}{\bf Задача $\theproblem^{^\dagger}$\negthickspace\,.  }\setcounter{subproblem}{0} }
+\def\upr{\medskip\noindent\stepcounter{uproblem}{\bf Упражнение \theuproblem .  }\setcounter{subproblem}{0} }
+%\def\prp{\vspace{5pt}\stepcounter{problem}{\bf Задача \theproblem .  } }
+%\def\prs{\vspace{5pt}\stepcounter{problem}{\bf \theproblem .*   }
+\def\prsub{\medskip\noindent\stepcounter{subproblem}{\sf \thesubproblem .} }
+\def\prsubr{\medskip\noindent\stepcounter{subproblem}{\sf \thesubproblem)} }
+\def\prsubstar{\medskip\noindent\stepcounter{subproblem}{$\mathsf{\thesubproblem^*}$\negthickspace.  } }
+\def\prsubrstar{\medskip\noindent\stepcounter{subproblem}{\sf $\mathsf{\thesubproblem^*}$)  } }
+
+\newcommand{\bracketspace}[1]{\phantom{(}\!\!{#1}\!\!\phantom{)}}
+
+\DeclareDocumentCommand{\Prpvar}{ O{null} O{} }{
+	\medskip\noindent\stepcounter{problem}\setcounter{prvar}{1}{\bf Задача \theproblem 
+% 	\ifthenelse{\equal{#1}{null}}{  }{ {\sf $\bm\langle$\bracketspace{#1}$\bm\rangle$}}
+%	~\!\!(\bracketspace{{\rm\Rnum{\theprvar}}}).  }\setcounter{subproblem}{0} 
+%	\;(\bracketspace{{\rm\Rnum{\theprvar}}})}\setcounter{subproblem}{0} 
+%
+	\,{\sf $\bm\langle$\bracketspace{{\rm\Rnum{\theprvar}}}$\bm\rangle$}
+	~\!\!\! \ifthenelse{\equal{#1}{null}}{\!}{{\sf(\bracketspace{#1})}}}.
+
+}
+%\DeclareDocumentCommand{\Prpvar}{ O{level} O{meta} m }{\prpvar}
+
+
+\DeclareDocumentCommand{\Prp}{ O{null} O{null} }{\setcounter{subproblem}{0}
+	\medskip\noindent\stepcounter{problem}\setcounter{prvar}{0}{\bf Задача \theproblem 
+	~\!\!\! \ifthenelse{\equal{#1}{null}}{\!}{{\sf(\bracketspace{#1})}}
+	 \ifthenelse{\equal{#2}{null}}{\!}{{\sf [\color{Gray444}\,\bracketspace{{\fontfamily{afd}\selectfont#2}}\,]}}}.
+}
+%\DeclareDocumentCommand{\Prp}{ O{level} O{meta} }
+
+\DeclareDocumentCommand{\Prps}{ O{null} O{null} }{\setcounter{subproblem}{0}
+	\medskip\noindent\stepcounter{problem}\setcounter{prvar}{0}{\bf Задача $\bm\theproblem^* $
+	~\!\!\! \ifthenelse{\equal{#1}{null}}{\!}{{\sf(\bracketspace{#1})}}
+	 \ifthenelse{\equal{#2}{null}}{\!}{{\sf [\color{Gray444}\,\bracketspace{{\fontfamily{afd}\selectfont#2}}\,]}}}.
+}
+
+\DeclareDocumentCommand{\Prpd}{ O{null} O{null} }{\setcounter{subproblem}{0}
+	\medskip\noindent\stepcounter{problem}\setcounter{prvar}{0}{\bf Задача $\bm\theproblem^\dagger$ 
+	~\!\!\! \ifthenelse{\equal{#1}{null}}{\!}{{\sf(\bracketspace{#1})}}
+	 \ifthenelse{\equal{#2}{null}}{\!}{{\sf [\color{Gray444}\,\bracketspace{{\fontfamily{afd}\selectfont#2}}\,]}}}.
+}
+
+
+\def\prend{
+%	\bigskip
+	\bigskip
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EOF Problems macros  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\quotient{\backslash\negthickspace\sim}
+
+\begin{document}
+
+	\centerline{\LARGE Задание 2}
+	\centerline{Усвяцов Михаил, группа 176 б}
+
+	\medskip
+
+	\centerline{\Large НКА и алгоритмы поиска подстрок}
+
+	\bigskip
+
+	\prp Постройте НКА по регулярному выражению $a((a|b)b)^*$.
+	
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto,initial text=]
+			\node[state,initial]		 	(q_0)                   {$q_0$};
+			\node [state, accepting] (q_1) [right = of q_0]	{$q_1$};
+			\node [state] 					(q_2) [right = of q_1]	{$q_2$};		
+			\node [state] 					(q_3) [right = of q_2]	{$q_3$};
+			\path[->] 
+			(q_0)	edge	 	node	{$a$}	(q_1)
+			(q_1)	edge [bend left]   node	{$a, b$} (q_2)
+			(q_2)	edge		node    {$a$} (q_3)
+					   edge	[bend left]  node    {$b$} (q_1);
+		\end{tikzpicture}
+	\end{center}
+	\medskip
+
+\prpstar Докажите, что по НКА данного вида ($\Sigma^*w\Sigma^*$) можно построить ДКА, число состояний которого не превосходит $|w|+1$.\\
+Очевидно, что для любой подстроки w длины n можно составить соответсующую часть ДКА с количеством переходов равным n. По одному переходу на букву слова. Состояний у такого автомата будет как раз n + 1.\\
+Рассмотрим w = $\epsilon$. Длина $\epsilon$ слова равна 0. Рассмотрим автомат, принимающий $\epsilon$ слово. 
+
+\begin{center}
+	\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto,initial text=]
+		\node[state,initial, accepting]		 	(q_0)                   {$q_0$};
+		\path[->] 
+		(q_0)	edge [loop above]	node	{$\forall x \in \Sigma$}	();
+	\end{tikzpicture}
+\end{center}
+\medskip
+
+Таким образом, для пустого слова условия задачи выполняются.
+Предположим, что существует слово w для которого выполняется условие задачи. $w_i$ будем обозначать i-букву слова. $i \in N$. Данный ДКА изображен на рисунке ниже.
+
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto,initial text=]
+			\node[state,initial]		 	(q_0)                   {$q_0$};
+			\node [state] (q_1) [right = of q_0]	{$q_1$};
+			\node [state] 					(q_2) [below = of q_1]	{$q_2$};		
+			\node [state] 					(q_i) [below = of q_2]	{$q_i$};
+			\node [state, accepting] 					(q_n) [below = of q_i]	{$q_n$};
+			\path[->] 
+			(q_0)	edge [loop above] node {$\forall x \in \Sigma$} ()
+					   edge	[bend left] node {$w_1$} (q_1)
+			(q_1)	edge [bend left] node {$\forall x \in \Sigma \setminus \{ w_2 \}$} (q_0)
+					   edge [bend left] node {$w_2$} (q_2)
+			(q_2)	edge [] node {$...$} (q_i)
+				       edge [bend left] node {$\forall x \in \Sigma \setminus \{ w_3 \}$} (q_0)
+			(q_i)    edge [] node {$...$} (q_n)
+					  edge [bend left] node {$\forall x \in \Sigma \setminus \{ w_{i+1} \}$} (q_0)
+			(q_n)  edge [loop below] node {$\forall x \in \Sigma$} (q_0);
+		\end{tikzpicture}
+	\end{center}
+	\medskip
+
+Теперь добавим еще одну букву в слово w. Куда бы мы ни добавили букву к подстроке w, мы увеличим количетсво состояний ровно на одно. Таким образом для подстроки длиной n + 1 количетсво состояний ДКА стало n+1 + 1 = n+2, ЧТД.
+
+\prp Постройте НКА, распознающий слова, в которых есть хотя бы одно из подслов $abab, abb, abaa$.
+
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto,initial text=]
+		\node[state,initial]		 	(q_0)                   {$q_0$};
+		\node [state, accepting]   (q_1) [right = of q_0]	{$q_1$};
+		\node [state] 					 (q_2) [right = of q_1]	{$q_2$};		
+		\node [state] 					 (q_3) [right = of q_2]	{$q_3$};
+		\node [state, accepting] 					 (q_4) [above = of q_3]	{$q_4$};
+		\path[->] 
+		(q_0)	edge [loop above]   node	{$a, b$}	()
+				   edge [bend left] node {$a$} (q_1) 
+		(q_1)	edge [bend left]   node	{$a$} (q_0)
+				   edge [] node {$b$} (q_2) 
+		(q_2)	edge []		node    {$a$} (q_3)
+				   edge	[]     node    {$b$} (q_4)
+	    (q_3)	edge []		node    {$a,b$} (q_4)
+		(q_4)   edge [loop above]	   node    {$a,b$} ();
+		\end{tikzpicture}
+	\end{center}
+
+\prp Постройте ДКА, который
+
+\prsubr распознаёт язык, все слова которого содержат чётное число нулей;
+
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto,initial text=]
+			\node[state,initial, accepting] (q_0) {$q_0$};
+			\node [state] (q_1) [right = of q_0] {$q_1$};
+			\path[->] 
+			(q_0) edge [bend left] node {$0$} (q_1)
+					 edge [loop above] node {$1$} ()
+			(q_1) edge [bend left] node {$0$} (q_0)
+			         edge [loop above] node {$1$} ();
+		\end{tikzpicture}
+	\end{center}
+
+\prsubr распознаёт язык, все слова которого содержат нечётное число единиц;
+
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto,initial text=]
+			\node[state,initial] (q_0) {$q_0$};
+			\node [state, accepting] (q_1) [right = of q_0] {$q_1$};
+			\path[->] 
+			(q_0) edge [bend left] node {$1$} (q_1)
+			edge [loop above] node {$0$} ()
+			(q_1) edge [bend left] node {$1$} (q_0)
+			edge [loop above] node {$0$} ();
+		\end{tikzpicture}
+	\end{center}
+
+\prsubr распознаёт язык, все слова которого содержат чётное число нулей и нечётное число единиц.
+
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto,initial text=]
+			\node[state,initial] (q_0) {$q_0$};
+			\node [state, accepting] (q_1) [right = of q_0] {$q_1$};
+			\node [state] (q_2) [right = of q_1] {$q_2$};
+			\path[->] 
+			(q_0) edge [bend left] node {$1$} (q_1)
+			(q_1) edge [bend left] node {$1$} (q_0)
+					 edge [bend left] node {$0$} (q_2)
+			(q_2) edge [bend left] node {$0$} (q_1);
+		\end{tikzpicture}
+	\end{center}
+
+\prend
+
+\prp Постройте автомат из задачи {\bf4(3)} используя автоматы, построенные в первых двух пунктах и конструкцию произведения.
+
+Обозначим автомат из пункта 1 за A, а автомат из пункта 2 за B. Тогда $Q_C = Q_A \times Q_B = \{q_0^A, q_0^B, q_1^A, q_1^B\}$\\
+$q_0^C = (q_0^A, q_0^B)$\\
+
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto,initial text=]
+		\node[state,initial] (q_00) {$q_0^A, q_0^B$};
+		\node [state, accepting] (q_11) [right = of q_00] {$q_0^Aq_1^B$};
+		\node [state] (q_22) [below = of q_00] {$q_1^A, q_0^B$};
+		\node [state] (q_33) [right = of q_22] {$q_1^A, q_1^B$};
+		\path[->]
+		(q_00) edge [bend left] node {0} (q_22)
+				   edge [bend left] node {1} (q_11)
+		(q_11) edge [bend left] node {0} (q_33)
+				   edge [bend left] node {1} (q_00)
+		(q_22) edge [bend left] node {0} (q_00)
+		           edge [bend left] node {1} (q_33)
+	    (q_33) edge [bend left] node {0} (q_11)
+		           edge [bend left] node {1} (q_22);
+		\end{tikzpicture}
+	\end{center}
+
+\prp Как изменить конструкцию произведения, чтобы в её результате автомат $\C$ распозновал язык $L(\A)\setminus L(\B)$ -- разность языков, распознаваемых ДКА $\A$ и $\B$?
+
+\begin{itemize}
+	\item $Q_\C = Q_\A \times Q_\B$;
+	\item $q_0^{\C} = (q_0^{\A},q_0^{\B})$;
+	\item $\forall \sigma \in \Sigma : \delta_\C((q_\A,q_\B), \sigma) = (\delta_\A(q_\A, \sigma), q_i \in Q_B \setminus  \{ \delta_\B(q_\B, \sigma ) \} )$;
+	\item $F_\C = F_\A\times Q_\B \setminus Q_\A \times F_\B $.
+\end{itemize}
+
+\prpstar Мы рассматривали алгоритм построения ДКА по РВ, в котором не встречается пустое слово. В случае когда оно встречается, исходное РВ $R$ может быть преобразовано либо в выражение $R^\prime$, либо в выражение $R^\prime\, |\,\eps$,
+где в выражение $R^\prime$ пустое слово уже не входит. Предложите алгоритм, который осуществляет такое преобразование.
+
+\prpstar Мы рассматривали алгоритм построения ДКА по РВ, в котором не встречается пустое множество. В случае когда оно встречается, исходное РВ $R$ может быть преобразовано либо в выражение $R^\prime$, либо в выражение $R^\prime\, |\, \eps$, причём пустое множество и постое слово в выражение $R^\prime$  не входят. Предложите алгоритм, который осуществляет такое преобразование.
+
+\textbf{Указание:} Введите новый атрибут в дерево.
+
+\newpage
+
+
+
+\end{document}

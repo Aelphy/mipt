@@ -1,0 +1,167 @@
+ \documentclass[12pt]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}        % Кодировка входного документа;
+                                    % при необходимости, вместо cp1251
+                                    % можно указать cp866 (Alt-кодировка
+                                    % DOS) или koi8-r.
+
+\usepackage[english,russian]{babel} % Включение русификации, русских и
+                                    % английских стилей и переносов
+%%\usepackage{a4}
+%%\usepackage{moreverb}
+\usepackage{indentfirst}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,amsbsy,amstext,amscd,amsxtra,multicol}
+\usepackage{verbatim}
+\usepackage{tikz} %Рисование автоматов
+\usetikzlibrary{automata,positioning}
+\usepackage{multicol} %Несколько колонок
+\usepackage{graphicx}
+\usepackage[colorlinks,urlcolor=blue]{hyperref}
+\usepackage[stable]{footmisc}
+
+%% \voffset-5mm
+%% \def\baselinestretch{1.44}
+\renewcommand{\theequation}{\arabic{equation}}
+\def\hm#1{#1\nobreak\discretionary{}{\hbox{$#1$}}{}}
+\newtheorem{Lemma}{Лемма}
+\theoremstyle{definiton}
+\newtheorem{Remark}{Замечание}
+%%\newtheorem{Def}{Определение}
+\newtheorem{Claim}{Утверждение}
+\newtheorem{Cor}{Следствие}
+\newtheorem{Theorem}{Теорема}
+\theoremstyle{definition}
+\newtheorem{Example}{Пример}
+\newtheorem*{known}{Теорема}
+\def\proofname{Доказательство}
+\theoremstyle{definition}
+\newtheorem{Def}{Определение}
+
+%% \newenvironment{Example} % имя окружения
+%% {\par\noindent{\bf Пример.}} % команды для \begin
+%% {\hfill$\scriptstyle\qed$} % команды для \end
+
+
+
+
+
+
+%\date{22 июня 2011 г.}
+\let\leq\leqslant
+\let\geq\geqslant
+\def\MT{\mathrm{MT}}
+%Обозначения ``ажуром''
+\def\BB{\mathbb B}
+\def\CC{\mathbb C}
+\def\RR{\mathbb R}
+\def\SS{\mathbb S}
+\def\ZZ{\mathbb Z}
+\def\NN{\mathbb N}
+\def\FF{\mathbb F}
+%греческие буквы
+\let\epsilon\varepsilon
+\let\es\varnothing
+\let\eps\varepsilon
+\let\al\alpha
+\let\sg\sigma
+\let\ga\gamma
+\let\ph\varphi
+\let\om\omega
+\let\ld\lambda
+\let\Ld\Lambda
+\let\vk\varkappa
+\let\Om\Omega
+\def\abstractname{}
+
+\def\R{{\cal R}}
+\def\A{{\cal A}}
+\def\B{{\cal B}}
+\def\C{{\cal C}}
+\def\D{{\cal D}}
+\let\w\omega
+
+%классы сложности
+\def\REG{{\mathsf{REG}}}
+\def\CFL{{\mathsf{CFL}}}
+\newcounter{problem}
+\newcounter{uproblem}
+\newcounter{subproblem}
+\def\pr{\medskip\noindent\stepcounter{problem}{\bf \theproblem .  }\setcounter{subproblem}{0} }
+\def\prstar{\medskip\noindent\stepcounter{problem}{\bf $\theproblem^*$\negthickspace.  }\setcounter{subproblem}{0} }
+\def\prpfrom[#1]{\medskip\noindent\stepcounter{problem}{\bf Задача \theproblem~(№#1 из задания).  }\setcounter{subproblem}{0} }
+\def\prp{\medskip\noindent\stepcounter{problem}{\bf Задача \theproblem .  }\setcounter{subproblem}{0} }
+\def\prpstar{\medskip\noindent\stepcounter{problem}{\bf Задача $\bf\theproblem^*$\negthickspace.  }\setcounter{subproblem}{0} }
+\def\prdag{\medskip\noindent\stepcounter{problem}{\bf Задача $\theproblem^{^\dagger}$\negthickspace\,.  }\setcounter{subproblem}{0} }
+\def\upr{\medskip\noindent\stepcounter{uproblem}{\bf Упражнение \theuproblem .  }\setcounter{subproblem}{0} }
+%\def\prp{\vspace{5pt}\stepcounter{problem}{\bf Задача \theproblem .  } }
+%\def\prs{\vspace{5pt}\stepcounter{problem}{\bf \theproblem .*   }
+\def\prsub{\medskip\noindent\stepcounter{subproblem}{\rm \thesubproblem .  } }
+\def\prsubstar{\medskip\noindent\stepcounter{subproblem}{\rm $\thesubproblem^*$\negthickspace.  } }
+%прочее
+\def\quotient{\backslash\negthickspace\sim}
+\begin{document}
+\centerline{\LARGE Задание 4}
+
+\medskip
+
+\begin{center}
+	{\Large Замкнутость регулярных языков, теорема Майхилла-Нероуда и минимальные автоматы}
+\end{center}
+
+\begin{center}
+	{Усвяцов Михаилб 176б}
+\end{center}
+
+\bigskip
+		
+		\prdag Доказать, что регулярные языки замкнуты относительно взятия морфизма.
+
+		\prdag Верно ли, что для любого языка $L$ и любого морфизма $\varphi : \Sigma^* \to \Sigma^*$
+
+		\prsub язык $\varphi(\varphi^{-1}(L))$ совпадает с $L$?
+
+		\prsub язык $\varphi^{-1}(\varphi(L))$ совпадает с $L$?
+
+		\prsub $\varphi(\varphi^{-1}(L)) \stackrel{?}{=} \varphi^{-1}(\varphi(L))$
+
+		\medskip
+		
+		\prdag Доказать, что регулярные языки замкнуты относительно операции взятия обратного морфизма.
+
+\prp Доказать, что для языка $L$ выполняется лемма о накачке, но он не является регулярным. Обозначим за ${\rm PRIMES}$ множество простых чисел. Напомним, что $A^+ = AA^*$.
+$$ L = b^* \cup \{ab^{\,p}\,|\, p \in {\rm PRIMES} \} \cup aa^+b^*.  $$
+
+\medskip
+
+\prp К языку $L_1$ добавили конечный язык $R$ и получили язык $L$ ($L = L_1\cup R$). Язык $L$ оказался регулярным. Верно ли, что язык $L_1$ мог быть нерегулярным?
+
+\bigskip
+
+\prp Язык $L$ задан автоматом $\A$. Построить минимальный автомат для языка $L$.
+
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto,initial text=]
+  %\draw[help lines] (0,0) grid (3,2);
+  \node[state ,initial] (q_0) 					 {$q_0$};
+  \node[state, accepting]		    (q_1) [ right = of q_0 ] {$q_1$};
+  \node[state]          (q_2) [ right = of q_1] {$q_2$};
+  \node[state, accepting]           (q_3) [ right = of q_2] {$q_3$};
+
+  \path[->] 
+		(q_0)	edge		node	{$a$}	(q_1)
+				edge [bend left] node {$b$}	(q_3)
+		(q_1)
+				edge		node	{$b$}	(q_2)
+		(q_2)
+				edge		node	{$b$}	(q_3)
+				edge [bend left] node {$a$}	(q_1);
+ \end{tikzpicture}
+\medskip
+
+\prp Постройте минимальный автомат для языка $\bar L$ из предыдущей задачи.
+
+\bigskip
+
+\prp Найдите все классы эквивалентности Майхилла-Нероуда для языка $\Sigma^*ab\Sigma^*$ и постройте по ним ДКА.
+
+
+\end{document}
